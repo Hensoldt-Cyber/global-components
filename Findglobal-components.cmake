@@ -60,26 +60,26 @@ endfunction()
 
 function(global_components_import_project)
     import_from_global_components(
-        remote-drivers/picotcp-ethernet-async
-        remote-drivers/picotcp-socket-sync
-        components/modules/fdt-bind-driver
-        components/modules/dynamic-untyped-allocators
-        components/modules/single-threaded
-        components/modules/x86-iospace-dma
-        components/modules/picotcp-base
-        components/BenchUtiliz
-        components/ClockServer
-        components/Ethdriver
-        components/FileServer
-        components/GPIOMUXServer
-        components/PCIConfigIO
-        components/PicoServer
-        components/ResetServer
-        components/RTC
-        components/SerialServer
-        components/TimeServer
-        components/VirtQueue
-        plat_components/tx2/BPMPServer
+        "remote-drivers/picotcp-ethernet-async2"
+        "remote-drivers/picotcp-socket-sync"
+        "components/modules/fdt-bind-driver"
+        "components/modules/dynamic-untyped-allocators"
+        "components/modules/single-threaded"
+        "components/modules/x86-iospace-dma"
+        "components/modules/picotcp-base"
+        "components/BenchUtiliz"
+        "components/ClockServer"
+        "components/Ethdriver"
+        "components/FileServer"
+        "components/GPIOMUXServer"
+        "components/PCIConfigIO"
+        "components/PicoServer"
+        "components/ResetServer"
+        "components/RTC"
+        "components/SerialServer"
+        "components/TimeServer"
+        "components/VirtQueue"
+        "plat_components/tx2/BPMPServer"
     )
 endfunction()
 
