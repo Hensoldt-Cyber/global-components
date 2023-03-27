@@ -52,7 +52,6 @@ endfunction()
 
 # Usage: import_from_global_components(<comp1> <comp2> ...)
 function(import_from_global_components)
-    global_components_import_connectors()
     CAmkESAddImportPath("components" "plat_components/${KernelPlatform}")
     foreach(comp IN LISTS ARGV)
         add_subdirectory("${GLOBAL_COMPONENTS_DIR}/${comp}" "${comp}")
