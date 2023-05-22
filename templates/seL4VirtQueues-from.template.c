@@ -89,7 +89,7 @@
 /*- set shmem_symbol = shmem_symbol.replace('.', '_') -*/
 /*- set page_size = macros.get_page_size(shmem_size, options.architecture) -*/
 /*- if page_size == 0 -*/
-  /*? raise(TemplateError('Setting %s.%s_shmem_size does not meet minimum size and alignment requirements. %d must be at least %d and %d aligned' % (me.instance.name, me.interface.name, size, 4096, 4096))) ?*/
+  /*? raise(TemplateError('Setting %s.%s_shmem_size does not meet minimum size and alignment requirements. %d must be at least %d and %d aligned' % (me.instance.name, me.interface.name, shmem_size, 4096, 4096))) ?*/
 /*- endif -*/
 
 /*? macros.shared_buffer_symbol(sym=shmem_symbol, shmem_size=shmem_size, page_size=page_size) ?*/
@@ -135,8 +135,6 @@ seL4_Word /*? me.interface.name ?*/_notification_badge(void) {
     return /*? badge ?*/;
 }
 
-/*- set interface_name =  me.interface.type.name -*/
-
 /*- set queue_id = macros.virtqueue_get_client_id(composition, me, configuration) -*/
 /*- if queue_id is none or not isinstance(queue_id, six.integer_types) -*/
   /*? raise(Exception('%s.%s_id must be set to a number' % (me.instance.name, me.interface.name))) ?*/
@@ -144,9 +142,19 @@ seL4_Word /*? me.interface.name ?*/_notification_badge(void) {
 
 //This is called by camkes runtime during init.
 static void __attribute__((constructor)) register_connector(void) {
-/*- if interface_name == "VirtQueueDrv" -*/
-    camkes_virtqueue_channel_register(/*? queue_id ?*/, "/*? me.interface.name ?*/", /*? queue_length ?*/, /*? me.interface.name ?*/_get_size(), (volatile void *) &/*? shmem_symbol ?*/,  /*? me.interface.name ?*/_notify, /*? me.interface.name ?*/_notification(), /*? me.interface.name ?*/_notification_badge(), VIRTQUEUE_DRIVER);
+    camkes_virtqueue_channel_register(
+        /*? queue_id ?*/,
+        "/*? me.interface.name ?*/",
+        /*? queue_length ?*/,
+        /*? me.interface.name ?*/_get_size(),
+        (volatile void *) &/*? shmem_symbol ?*/,
+        /*? me.interface.name ?*/_notify,
+        /*? me.interface.name ?*/_notification(),
+        /*? me.interface.name ?*/_notification_badge(),
+/*- if me.interface.type.name == "VirtQueueDrv" -*/
+        VIRTQUEUE_DRIVER
 /*- else -*/
-    camkes_virtqueue_channel_register(/*? queue_id ?*/, "/*? me.interface.name ?*/", /*? queue_length ?*/, /*? me.interface.name ?*/_get_size(), (volatile void *) &/*? shmem_symbol ?*/,  /*? me.interface.name ?*/_notify, /*? me.interface.name ?*/_notification(), /*? me.interface.name ?*/_notification_badge(), VIRTQUEUE_DEVICE);
+        VIRTQUEUE_DEVICE
 /*- endif -*/
+    );
 }
