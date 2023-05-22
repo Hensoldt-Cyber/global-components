@@ -19,9 +19,7 @@
 
 /*- set all_connection_ends = me.parent.from_ends -*/
 
-/*- set interface_name =  me.interface.type.name -*/
-
-/*- if interface_name == "VirtQueueDrv" -*/
+/*- if me.interface.type.name == "VirtQueueDrv" -*/
     /*- set end_string = "drv" -*/
     /*- set other_end_string = "dev" -*/
 /*- else -*/
